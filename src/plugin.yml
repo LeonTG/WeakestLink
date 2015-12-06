@@ -1,0 +1,9 @@
+name: WeakestLink
+main: com.leontg77.weakestlink.Main
+version: 1.0
+author: LeonTG77
+description: Every 10 minutes the person with the least health will perish. Will be turned off at meetup.
+
+commands:
+    weakestlink:
+        description: Enable or disable the scenario.
