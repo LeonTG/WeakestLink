@@ -19,7 +19,8 @@ public class KillingTask extends BukkitRunnable {
 	public void run() {
 		Player toKill = BY_HEALTH.min(Bukkit.getOnlinePlayers());
 		
-		// if to kill is null, return.
+		// if to kill is null, stop.
+		// not that it should be null...
 		if (toKill == null) {
 			return;
 		}
