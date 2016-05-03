@@ -5,5 +5,5 @@ author: LeonTG77
 description: Every 10 minutes the person with the least health will perish. Will be turned off at meetup.
 
 commands:
-    weakestlink:
-        description: Enable or disable the scenario.
+  weakestlink:
+    description: Enable or disable the scenario.
