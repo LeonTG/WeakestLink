@@ -29,6 +29,17 @@ public class KillingTask extends BukkitRunnable {
 		SPECTATOR_GAMEMODE_OPTIONAL = Optional.fromNullable(spectatorGameMode);
 	}
 	
+	private final Main plugin;
+	
+	/**
+	 * Killing task class constructor.
+	 * 
+	 * @param plugin The main class.
+	 */
+	public KillingTask(Main plugin) {
+		this.plugin = plugin;
+	}
+	
 	/**
 	 * Ordering of everyones health.
 	 */
@@ -54,11 +65,11 @@ public class KillingTask extends BukkitRunnable {
 		Player toKill = BY_HEALTH.min(list);
 
 		if (isAllAtSameHealth() || toKill == null) {
-			Bukkit.broadcastMessage(Main.PREFIX + "You were lucky, there were no one to kill.");
+			plugin.broadcast(Main.PREFIX + "You were lucky, there were no one to kill.");
 			return;
 		}
 
-		Bukkit.broadcastMessage(Main.PREFIX + toKill.getName() + " was on the lowest health and got perished.");
+		plugin.broadcast(Main.PREFIX + toKill.getName() + " was on the lowest health and got perished.");
 		
 		// the damaging is so they get the damage sound when taking the damage to die.
 		toKill.damage(0);
