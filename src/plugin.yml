@@ -1,6 +1,6 @@
 name: WeakestLink
 main: com.leontg77.weakestlink.Main
-version: 1.0
+version: 1.0.0
 author: LeonTG77
 description: Every 10 minutes the person with the least health will perish. If everyone is at the same health no one will die. Optionally can be disabled at meetup.
 
