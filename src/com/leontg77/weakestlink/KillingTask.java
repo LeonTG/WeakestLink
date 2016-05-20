@@ -1,15 +1,34 @@
+/** 
+ * Project: WeakestLink
+ * Class: com.leontg77.weakestlink.KillingTask
+ *
+ * The MIT License (MIT)
+ * 
+ * Copyright (c) 2016 Leon Vaktskjold <leontg77@gmail.com>.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package com.leontg77.weakestlink;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import com.google.common.base.Optional;
-import com.google.common.collect.Ordering;
 
 /**
  * Killing task class.
@@ -17,19 +36,7 @@ import com.google.common.collect.Ordering;
  * @author LeonTG77
  */
 public class KillingTask extends BukkitRunnable {
-	public static final Optional<GameMode> SPECTATOR_GAMEMODE_OPTIONAL;
-
-	static {
-		GameMode spectatorGameMode = null;
-		
-		try {
-			spectatorGameMode = GameMode.valueOf("SPECTATOR");
-		} catch (Exception ignored) {}
-		
-		SPECTATOR_GAMEMODE_OPTIONAL = Optional.fromNullable(spectatorGameMode);
-	}
-	
-	private final Main plugin;
+    private final Main plugin;
 	
 	/**
 	 * Killing task class constructor.
@@ -39,32 +46,12 @@ public class KillingTask extends BukkitRunnable {
 	public KillingTask(Main plugin) {
 		this.plugin = plugin;
 	}
-	
-	/**
-	 * Ordering of everyones health.
-	 */
-	private static final Ordering<Player> BY_HEALTH = new Ordering<Player>() {
-        @Override
-        public int compare(Player p1, Player p2) {
-            return Double.compare(p1.getHealth(), p2.getHealth());
-        }
-    };
-
+    
 	@Override
 	public void run() {
-		List<Player> list = new ArrayList<Player>();
-		
-		for (Player online : Bukkit.getOnlinePlayers()) {
-			if (SPECTATOR_GAMEMODE_OPTIONAL.isPresent() && online.getGameMode() == SPECTATOR_GAMEMODE_OPTIONAL.get()) {
-				continue;
-			}
-			
-			list.add(online);
-		}
-		
-		Player toKill = BY_HEALTH.min(list);
+		Player toKill = plugin.getLowestPlayer();
 
-		if (isAllAtSameHealth() || toKill == null) {
+		if (toKill == null) {
 			plugin.broadcast(Main.PREFIX + "You were lucky, there were no one to kill.");
 			return;
 		}
@@ -74,32 +61,5 @@ public class KillingTask extends BukkitRunnable {
 		// the damaging is so they get the damage sound when taking the damage to die.
 		toKill.damage(0);
 		toKill.setHealth(0);
-	}
-	
-	/**
-	 * Check if all online players are at the same health.
-	 * <p>
-	 * Doesn't count players in gamemode 3.
-	 * 
-	 * @return True if they are, false otherwise.
-	 */
-	private boolean isAllAtSameHealth() {
-		boolean isSameHealth = true;
-		Player last = null;
-		
-		for (Player online : Bukkit.getOnlinePlayers()) {
-			if (SPECTATOR_GAMEMODE_OPTIONAL.isPresent() && online.getGameMode() == SPECTATOR_GAMEMODE_OPTIONAL.get()) {
-				continue;
-			}
-			
-			if (last != null && last.getHealth() != online.getHealth()) {
-				isSameHealth = false;
-				break;
-			}
-			
-			last = online;
-		}
-		
-		return isSameHealth;
 	}
 }
