@@ -37,29 +37,29 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 public class KillingTask extends BukkitRunnable {
     private final Main plugin;
-	
-	/**
-	 * Killing task class constructor.
-	 * 
-	 * @param plugin The main class.
-	 */
-	public KillingTask(Main plugin) {
-		this.plugin = plugin;
-	}
     
-	@Override
-	public void run() {
-		Player toKill = plugin.getLowestPlayer();
+    /**
+     * Killing task class constructor.
+     * 
+     * @param plugin The main class.
+     */
+    public KillingTask(Main plugin) {
+        this.plugin = plugin;
+    }
 
-		if (toKill == null) {
-			plugin.broadcast(Main.PREFIX + "You were lucky, there were no one to kill.");
-			return;
-		}
+    @Override
+    public void run() {
+        Player toKill = plugin.getLowestPlayer();
 
-		plugin.broadcast(Main.PREFIX + toKill.getName() + " was on the lowest health and got perished.");
-		
-		// the damaging is so they get the damage sound when taking the damage to die.
-		toKill.damage(0);
-		toKill.setHealth(0);
-	}
+        if (toKill == null) {
+            plugin.broadcast(Main.PREFIX + "You were lucky, there were no one to kill.");
+            return;
+        }
+
+        plugin.broadcast(Main.PREFIX + toKill.getName() + " was on the lowest health and got perished.");
+        
+        // the damaging is so they get the damage sound when taking the damage to die.
+        toKill.damage(0);
+        toKill.setHealth(0);
+    }
 }

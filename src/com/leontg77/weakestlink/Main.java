@@ -58,27 +58,27 @@ public class Main extends JavaPlugin {
         SPECTATOR_GAMEMODE_OPTIONAL = Optional.fromNullable(spectatorGameMode);
     }
     
-	public static final String PREFIX = "§aWeakest Link §8» §f";
+    public static final String PREFIX = "§aWeakest Link §8» §f";
 
-	@Override
-	public void onDisable() {
-		PluginDescriptionFile file = getDescription();
-		getLogger().info(file.getName() + " is now disabled.");
-	}
-	
-	@Override
-	public void onEnable() {
-		PluginDescriptionFile file = getDescription();
-		getLogger().info(file.getName() + " v" + file.getVersion() + " is now enabled.");
-		getLogger().info("Plugin is made by LeonTG77.");
-		
-		KillingTask task = new KillingTask(this);
-		WeakestLinkCommand cmd = new WeakestLinkCommand(this, task);
-		
-		// register command.
-		getCommand("weakestlink").setExecutor(cmd);
-		getCommand("weakestlink").setTabCompleter(cmd);
-	}
+    @Override
+    public void onDisable() {
+        PluginDescriptionFile file = getDescription();
+        getLogger().info(file.getName() + " is now disabled.");
+    }
+    
+    @Override
+    public void onEnable() {
+        PluginDescriptionFile file = getDescription();
+        getLogger().info(file.getName() + " v" + file.getVersion() + " is now enabled.");
+        getLogger().info("Plugin is made by LeonTG77.");
+        
+        KillingTask task = new KillingTask(this);
+        WeakestLinkCommand cmd = new WeakestLinkCommand(this, task);
+        
+        // register command.
+        getCommand("weakestlink").setExecutor(cmd);
+        getCommand("weakestlink").setTabCompleter(cmd);
+    }
     
     /**
      * Send the given message to all online players.
@@ -114,21 +114,21 @@ public class Main extends JavaPlugin {
     };
     
     private static final Predicate<Player> NOT_SPECTATOR = Predicates.not(IS_SPECTATOR);
-	    
+        
     /**
      * Get the lowest online player by their health.
      * 
      * @return The lowest player.
      */
-	public Player getLowestPlayer() {
-	    Player lowest = BY_HEALTH.min(Iterables.filter(Bukkit.getOnlinePlayers(), NOT_SPECTATOR));
+    public Player getLowestPlayer() {
+        Player lowest = BY_HEALTH.min(Iterables.filter(Bukkit.getOnlinePlayers(), NOT_SPECTATOR));
 
         if (isAllAtSameHealth() || lowest == null) {
             return null;
         }
         
         return lowest;
-	}
+    }
     
     /**
      * Check if all online players are at the same health.
