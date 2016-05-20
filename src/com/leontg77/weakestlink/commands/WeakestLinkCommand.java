@@ -1,3 +1,30 @@
+/**
+ * Project: WeakestLink
+ * Class: com.leontg77.weakestlink.commands.WeakestLinkCommand
+ *
+ * The MIT License (MIT)
+ * 
+ * Copyright (c) 2016 Leon Vaktskjold <leontg77@gmail.com>.
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
 package com.leontg77.weakestlink.commands;
 
 import java.util.ArrayList;
@@ -8,6 +35,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 
 import com.leontg77.weakestlink.KillingTask;
 import com.leontg77.weakestlink.Main;
@@ -42,13 +70,25 @@ public class WeakestLinkCommand implements CommandExecutor, TabCompleter {
 			sender.sendMessage(Main.PREFIX + "Usage: /weakestlink <info|enable|disable>");
 			return true;
 		}
+        
+        if (args[0].equalsIgnoreCase("info")) {
+            sender.sendMessage(Main.PREFIX + "Scenario creator: §a/u/???");
+            sender.sendMessage(Main.PREFIX + "Plugin creator: §aLeonTG77");
+            sender.sendMessage(Main.PREFIX + "Version: §a" + plugin.getDescription().getVersion());
+            sender.sendMessage(Main.PREFIX + "Description:");
+            sender.sendMessage("§8» §f" + plugin.getDescription().getDescription());
+            return true;
+        }
 		
 		if (args[0].equalsIgnoreCase("info")) {
-			sender.sendMessage(Main.PREFIX + "Scenario creator: §a/u/???");
-			sender.sendMessage(Main.PREFIX + "Plugin creator: §aLeonTG77");
-			sender.sendMessage(Main.PREFIX + "Version: §a" + plugin.getDescription().getVersion());
-			sender.sendMessage(Main.PREFIX + "Description:");
-			sender.sendMessage("§8» §f" + plugin.getDescription().getDescription());
+		    Player lowest = plugin.getLowestPlayer();
+		    
+		    if (lowest == null) {
+	            sender.sendMessage(Main.PREFIX + "Everyone is at the same health.");
+	            return true;
+		    }
+		    
+			sender.sendMessage(Main.PREFIX + "The lowest player is: §a" + lowest.getName());
 			return true;
 		}
 		
