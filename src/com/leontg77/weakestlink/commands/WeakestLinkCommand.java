@@ -81,6 +81,11 @@ public class WeakestLinkCommand implements CommandExecutor, TabCompleter {
         }
         
         if (args[0].equalsIgnoreCase("current")) {
+            if (!enabled) {
+                sender.sendMessage(Main.PREFIX + "Weakest Link is not enabled.");
+                return true;
+            }
+            
             Player lowest = plugin.getLowestPlayer();
             
             if (lowest == null) {
