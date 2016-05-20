@@ -67,7 +67,7 @@ public class WeakestLinkCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 0) {
-            sender.sendMessage(Main.PREFIX + "Usage: /weakestlink <info|enable|disable>");
+            sender.sendMessage(Main.PREFIX + "Usage: /weakestlink <info|current|enable|disable>");
             return true;
         }
         
@@ -80,7 +80,7 @@ public class WeakestLinkCommand implements CommandExecutor, TabCompleter {
             return true;
         }
         
-        if (args[0].equalsIgnoreCase("info")) {
+        if (args[0].equalsIgnoreCase("current")) {
             Player lowest = plugin.getLowestPlayer();
             
             if (lowest == null) {
@@ -128,7 +128,7 @@ public class WeakestLinkCommand implements CommandExecutor, TabCompleter {
             return true;
         }
         
-        sender.sendMessage(Main.PREFIX + "Usage: /weakestlink <info|enable|disable>");
+        sender.sendMessage(Main.PREFIX + "Usage: /weakestlink <info|current|enable|disable>");
         return true;
     }
 
@@ -142,6 +142,7 @@ public class WeakestLinkCommand implements CommandExecutor, TabCompleter {
         }
         
         list.add("info");
+        list.add("current");
         
         if (sender.hasPermission(PERMISSION)) {
             list.add("enable");
