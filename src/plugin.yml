@@ -2,7 +2,7 @@ name: WeakestLink
 main: com.leontg77.weakestlink.Main
 version: 1.0
 author: LeonTG77
-description: Every 10 minutes the person with the least health will perish. Will be turned off at meetup.
+description: Every 10 minutes the person with the least health will perish. If everyone is at the same health no one will die. Optionally can be disabled at meetup.
 
 commands:
   weakestlink:
